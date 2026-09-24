@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work — FELU · Automation Case Studies</title>
+<meta name="description" content="Five automation case studies by FELU: email-to-WhatsApp alerting, AI support triage, automated reporting, a Drive-grounded RAG agent, and a form-to-video product pipeline.">
+<meta property="og:title" content="Work — FELU"><meta property="og:description" content="Case studies: problem → process → result."><meta property="og:type" content="website"><meta property="og:image" content="assets/og-cover.svg">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a><div class="progress" aria-hidden="true"><i></i></div>
+<header class="nav"><div class="nav-inner">
+<a class="logo" href="index.html"><span class="dot"></span>FELU<b>/</b>AUTOMATION.DEV</a>
+<nav class="links" aria-label="Primary"><a class="nl" href="work.html" aria-current="page">Work</a><a class="nl" href="about.html">About</a><a class="nl" href="about.html#experience">Experience</a><a class="nl" href="contact.html">Contact</a><a class="btn" href="contact.html">Let's Talk</a></nav>
+<button class="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<div class="mobile-menu" role="dialog" aria-label="Menu"><button class="close" aria-label="Close menu">✕</button>
+<a class="big" href="work.html"><small>01</small>Work</a><a class="big" href="about.html"><small>02</small>About</a><a class="big" href="contact.html"><small>04</small>Contact</a>
+<a class="btn" href="contact.html" style="margin-top:24px;justify-content:center">Let's Talk</a></div>
+<main id="main">
+<section class="page-hero"><div class="wrap"><p class="kicker">Work — case studies</p>
+<h1>Each project gets<br>its own chapter.</h1>
+<p>Not screenshots. Stories: what was broken, what I built, what changed — with numbers where they exist and honest brackets where they don't.</p></div></section>
+
+<article class="case" style="border-top:0"><div class="wrap" style="display:contents">
+<div><p class="meta">PROJECT 01 — LIVE SYSTEM</p><h2>EammaGloberMovers: inbox → WhatsApp</h2>
+<p style="color:var(--muted)">Move requests landing by email were being missed or answered hours late.</p>
+<div class="ptags"><span class="tag">n8n</span><span class="tag">Gmail API</span><span class="tag">WhatsApp API</span><span class="tag">My role: design + build + deploy</span></div>
+<h4>Problem</h4><p>Staff checked a shared inbox manually. Peak days meant 10+ hrs/week of triage and delayed quotes — lost jobs.</p>
+<h4>Process</h4><p>Mapped the inbox for a week, then built an n8n flow: Gmail trigger → parse (dates, addresses, phone) → dedupe → WhatsApp alert to the dispatcher with a one-tap reply draft. Retries + error channel included.</p>
+<div class="result"><b>RESULT →</b> Response time same-day → minutes. <b>0 missed alerts</b> since launch — roughly 8–10 hrs/week of triage handed to the pipeline.</div>
+<p style="margin-top:20px"><a class="tlink" href=\"work/eamaglobermovers.html\">Full case study →</a></p></div>
+<div class="case-media" role="img" aria-label="Placeholder mockup of the email to WhatsApp automation flow"><div class="bar"><i></i><i></i><i></i>&nbsp; flow: inbox → whatsapp — live canvas</div><div class="shot s1">GMAIL TRIGGER → PARSE → WHATSAPP.SEND</div></div>
+</div></article>
+
+<article class="case"><div class="wrap" style="display:contents">
+<div><p class="meta">PROJECT 02 — AI / LLM</p><h2>Support Pilot: AI ticket triage</h2>
+<p style="color:var(--muted)">A shared support inbox with no routing — everything read by a human first.</p>
+<div class="ptags"><span class="tag">LLM classification</span><span class="tag">Embeddings</span><span class="tag">Python</span><span class="tag">Postgres</span><span class="tag">My role: solo build</span></div>
+<h4>Problem</h4><p>200+ tickets/week, no priority signal. Urgent issues waited behind password resets.</p>
+<h4>Process</h4><p>Built a classifier over historical tickets (embeddings + LLM fallback), confidence-gated: high-confidence auto-routes with a drafted reply; low-confidence flags for human review. Human-in-the-loop from day one.</p>
+<div class="result"><b>RESULT →</b> 60% of tickets auto-routed; first-response time <b>down from hours to under 30 minutes</b>. Humans handle edge cases only.</div>
+<p style="margin-top:20px"><a class="tlink" href=\"work/support-pilot.html\">Full case study →</a></p></div>
+<div class="case-media" role="img" aria-label="Placeholder mockup of the triage dashboard"><div class="bar"><i></i><i></i><i></i>&nbsp; triage queue — live dashboard</div><div class="shot s2">AUTO-ROUTED 62% · DRAFTED · QUEUED</div></div>
+</div></article>
+
+<article class="case"><div class="wrap" style="display:contents">
+<div><p class="meta">PROJECT 03 — REPORTING PIPELINE</p><h2>ReportFlow: 6 hrs/week → near-zero</h2>
+<p style="color:var(--muted)">Weekly ops reporting assembled by hand from three sources every Friday.</p>
+<div class="ptags"><span class="tag">n8n</span><span class="tag">LLM summariser</span><span class="tag">Sheets API</span><span class="tag">My role: design + build</span></div>
+<h4>Problem</h4><p>6 hours/week of copy-paste across Sheets, inbox and CRM. Errors crept in; nobody trusted the numbers.</p>
+<h4>Process</h4><p>Scheduled pipeline: pull → normalise → validate → LLM executive summary with figures quoted (not invented) → deliver to Sheets + email every Monday 07:00. Validation gate blocks sends on schema mismatch.</p>
+<div class="result"><b>RESULT →</b> Manual reporting <b>6h → ~20min review (−94%)</b>. One source of truth, timestamped.</div>
+<p style="margin-top:20px"><a class="tlink" href=\"work/reportflow.html\">Full case study →</a></p></div>
+<div class="case-media" role="img" aria-label="Placeholder mockup of the automated report"><div class="bar"><i></i><i></i><i></i>&nbsp; monday report — live output</div><div class="shot s3">MON 07:00 · REPORT DELIVERED · ✓ VALIDATED</div></div>
+</div></article>
+
+<article class="case"><div class="wrap" style="display:contents">
+<div><p class="meta">PROJECT 04 — RAG / AI AGENT</p><h2>Knowledge Agent: ask your Drive</h2>
+<p style="color:var(--muted)">Scattered Drive files → Pinecone retrieval → an AI agent that answers and files reports to Google Docs.</p>
+<div class="ptags"><span class="tag">n8n</span><span class="tag">OpenAI</span><span class="tag">Gemini embeddings</span><span class="tag">Pinecone</span><span class="tag">Docs</span></div>
+<div class="term"><span class="g">$</span> sheets.list → loop → drive.get → pinecone.upsert … <span class="g">agent.answers ✓</span></div>
+<h4>Problem</h4><p>Research questions meant 30+ minutes of open-tab archaeology across dozens of files; reports assembled by copy-paste.</p>
+<h4>Process</h4><p>Ingest branch (Sheets file list → loop → Drive download → recursive split → Gemini embeddings → Pinecone) plus an answer branch: AI Agent with memory and a Pinecone Vector Store Tool, output saved to Google Docs.</p>
+<div class="result"><b>RESULT →</b> Full-corpus answers in seconds, reports auto-filed — research per report down from ~30 minutes to seconds.</div>
+<p style="margin-top:20px"><a class="tlink" href="work/rag-agent.html">Full case study →</a></p></div>
+<div class="case-media" role="img" aria-label="RAG pipeline canvas: ingest loop and answering agent"><div class="bar"><i></i><i></i><i></i>&nbsp; rag ingest + agent — live canvas</div><div class="shotwrap"><div class="shot s2">SHEETS → LOOP → DRIVE → PINECONE · AGENT → DOCS</div><img class="shot-img" src="assets/rag-agent.png" alt="n8n workflow: Sheets-driven ingest into Pinecone with an AI agent saving reports to Google Docs" loading="lazy" width="1200" height="675" onerror="this.remove()"></div></div>
+</div></article>
+
+<article class="case"><div class="wrap" style="display:contents">
+<div><p class="meta">PROJECT 05 — MEDIA PIPELINE</p><h2>Launch Pipeline: form to product video</h2>
+<p style="color:var(--muted)">One form submission → Drive folders, background removal, AI video with status polling, Gmail delivery. Zero manual handoffs.</p>
+<div class="ptags"><span class="tag">n8n</span><span class="tag">Drive API</span><span class="tag">BG-remove API</span><span class="tag">AI video API</span><span class="tag">Gmail</span></div>
+<h4>Problem</h4><p>Every product launch repeated a dozen steps across four tools — slow, inconsistent, videos forgotten, notifications late.</p>
+<h4>Process</h4><p>Form trigger → slug → folder → access → parallel upload + background removal → AI video creation → wait/poll loop until rendered → upload → update links → Gmail notification.</p>
+<div class="result"><b>RESULT →</b> Complete listing asset pack from one form fill — launch prep down from hours of manual steps to minutes.</div>
+<p style="margin-top:20px"><a class="tlink" href="work/product-pipeline.html">Full case study →</a></p></div>
+<div class="case-media" role="img" aria-label="Product pipeline canvas: form to video flow"><div class="bar"><i></i><i></i><i></i>&nbsp; launch pipeline — live canvas</div><div class="shotwrap"><div class="shot s1">FORM → FOLDERS → BG-REMOVE → VIDEO → EMAIL</div><img class="shot-img" src="assets/product-pipeline.png" alt="n8n workflow: form submission to Drive folders, background removal, AI video polling loop and Gmail notification" loading="lazy" width="1200" height="675" onerror="this.remove()"></div></div>
+</div></article>
+
+<section class="sec cta-big"><div class="wrap rv"><p class="kicker">Your chapter?</p>
+<h2 style="margin-top:22px">Your bottleneck, <em>chapter 06.</em></h2>
+<div class="cta-row"><a class="btn" href="contact.html">Start a Project →</a></div></div></section>
+</main>
+<footer><div class="wrap"><div class="f-grid">
+<div><a class="logo" href="index.html"><span class="dot"></span>FELU<b>/</b>AUTOMATION.DEV</a><p style="color:var(--muted);margin-top:16px;font-size:.93rem">Case studies with receipts.</p></div>
+<nav aria-label="Footer"><span class="meta">Sitemap</span><a href="work.html">Work</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+<nav aria-label="Social"><span class="meta">Elsewhere</span><a href="https://github.com/felu5g">GitHub</a><a href="https://linkedin.com/in/felu5g">LinkedIn</a><a href="https://x.com/felu5g">X</a></nav></div>
+<div class="f-base"><span>© <span id="yr">2026</span> FELU</span><span>STATUS: <span style="color:var(--accent)">● OPERATIONAL</span></span></div></div></footer>
+<script src="js/main.js"></script>
+</body>
+</html>

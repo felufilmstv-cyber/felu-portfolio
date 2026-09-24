@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge Agent — RAG over Google Drive · FELU</title>
+<meta name="description" content="Case study: n8n RAG pipeline — Google Sheets file list, Drive downloads, Gemini embeddings in Pinecone, and an AI agent that answers from your docs and saves reports to Google Docs.">
+<meta property="og:title" content="Knowledge Agent — RAG over Google Drive"><meta property="og:type" content="website"><meta property="og:image" content="../assets/rag-agent.png">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a><div class="progress" aria-hidden="true"><i></i></div>
+<header class="nav"><div class="nav-inner">
+<a class="logo" href="../index.html"><span class="dot"></span>FELU<b>/</b>AUTOMATION.DEV</a>
+<nav class="links" aria-label="Primary"><a class="nl" href="../work.html" aria-current="page">Work</a><a class="nl" href="../about.html">About</a><a class="nl" href="../about.html#experience">Experience</a><a class="nl" href="../contact.html">Contact</a><a class="btn" href="../contact.html">Let's Talk</a></nav>
+<button class="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<div class="mobile-menu" role="dialog" aria-label="Menu"><button class="close" aria-label="Close menu">✕</button>
+<a class="big" href="../work.html"><small>01</small>Work</a><a class="big" href="../about.html"><small>02</small>About</a><a class="big" href="../contact.html"><small>04</small>Contact</a>
+<a class="btn" href="../contact.html" style="margin-top:24px;justify-content:center">Let's Talk</a></div>
+<main id="main">
+<section class="page-hero"><div class="wrap"><p class="kicker">Project 04 — RAG / AI agent</p>
+<h1>Ask your Drive.<br>Get a report.</h1>
+<div class="ptags"><span class="tag">n8n</span><span class="tag">OpenAI</span><span class="tag">Google Gemini embeddings</span><span class="tag">Pinecone</span><span class="tag">Drive · Sheets · Docs</span><span class="tag">Role: design + build</span></div>
+<p style="margin-top:18px">Company knowledge lived in scattered Drive files — answering a question meant hunting documents by hand. I built a retrieval pipeline plus an AI agent: it ingests the corpus into Pinecone, answers from retrieved context, and writes the report straight to Google Docs.</p></div></section>
+<section class="sec"><div class="wrap">
+<div class="case-media" role="img" aria-label="n8n canvas showing the RAG ingest loop and AI agent saving reports to Google Docs"><div class="bar"><i></i><i></i><i></i>&nbsp; n8n canvas — rag ingest + agent</div><div class="shotwrap"><div class="shot s2">SHEETS → LOOP → DRIVE → PINECONE · AGENT → DOCS</div><img class="shot-img" src="../assets/rag-agent.png" alt="n8n workflow: file list from Google Sheets looped through Drive downloads into Pinecone, with an AI agent answering via retrieval and saving reports to Google Docs" loading="lazy" width="1200" height="675" onerror="this.remove()"></div></div>
+<h4 class="meta" style="color:var(--accent);margin:32px 0 8px">PROBLEM</h4>
+<p style="color:var(--muted);max-width:64ch">Dozens of source files, one shared Drive, zero recall. Every research question turned into 30+ minutes of open-tab archaeology — and reports were assembled by copy-paste.</p>
+<h4 class="meta" style="color:var(--accent);margin:24px 0 8px">PROCESS</h4>
+<p style="color:var(--muted);max-width:64ch">Two branches, one system. <strong style="color:var(--text)">Ingest:</strong> a Google Sheet lists files to load → loop over items → download from Drive → Recursive Character Text Splitter → Gemini embeddings → Pinecone Vector Store. <strong style="color:var(--text)">Answer:</strong> an AI Agent (OpenAI chat model, with memory) gets a Vector Store Tool backed by Pinecone retrieval, and its output is saved via update-document to Google Docs. Retrieval-first means answers stay grounded in your files, not model imagination.</p>
+<div class="result"><b>RESULT →</b> Questions over the full corpus answered in seconds with a report auto-filed to Docs — research per report down from ~30 minutes to seconds.</div>
+<div class="cta-row"><a class="btn" href="../contact.html">Ground My Docs Like This →</a><a class="btn ghost" href="../work.html">← All Work</a></div>
+</div></section>
+</main>
+<footer><div class="wrap"><div class="f-grid">
+<div><a class="logo" href="../index.html"><span class="dot"></span>FELU<b>/</b>AUTOMATION.DEV</a></div>
+<nav aria-label="Footer"><span class="meta">Sitemap</span><a href="../work.html">Work</a><a href="../about.html">About</a><a href="../contact.html">Contact</a></nav>
+<nav aria-label="Social"><span class="meta">Elsewhere</span><a href="https://github.com/felu5g">GitHub</a><a href="https://linkedin.com/in/felu5g">LinkedIn</a><a href="https://x.com/felu5g">X</a></nav></div>
+<div class="f-base"><span>© <span id="yr">2026</span> FELU</span><span>STATUS: <span style="color:var(--accent)">● OPERATIONAL</span></span></div></div></footer>
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support Pilot — AI Ticket Triage · FELU</title>
+<meta name="description" content="Case study: LLM-powered support ticket classification, routing and reply drafting. High-confidence auto-routes, humans on edge cases.">
+<meta property="og:title" content="Support Pilot — AI ticket triage"><meta property="og:type" content="website"><meta property="og:image" content="../assets/og-cover.svg">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a><div class="progress" aria-hidden="true"><i></i></div>
+<header class="nav"><div class="nav-inner">
+<a class="logo" href="../index.html"><span class="dot"></span>FELU<b>/</b>AUTOMATION.DEV</a>
+<nav class="links" aria-label="Primary"><a class="nl" href="../work.html" aria-current="page">Work</a><a class="nl" href="../about.html">About</a><a class="nl" href="../about.html#experience">Experience</a><a class="nl" href="../contact.html">Contact</a><a class="btn" href="../contact.html">Let's Talk</a></nav>
+<button class="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<div class="mobile-menu" role="dialog" aria-label="Menu"><button class="close" aria-label="Close menu">✕</button>
+<a class="big" href="../work.html"><small>01</small>Work</a><a class="big" href="../about.html"><small>02</small>About</a><a class="big" href="../contact.html"><small>04</small>Contact</a>
+<a class="btn" href="../contact.html" style="margin-top:24px;justify-content:center">Let's Talk</a></div>
+<main id="main">
+<section class="page-hero"><div class="wrap"><p class="kicker">Project 02 — AI / LLM</p>
+<h1>The queue stops<br>being a queue.</h1>
+<div class="ptags"><span class="tag">LLM classification</span><span class="tag">Embeddings</span><span class="tag">Python</span><span class="tag">Postgres</span><span class="tag">Role: solo build</span></div>
+<p style="margin-top:18px">200+ tickets/week hit a shared inbox with no routing. I built a confidence-gated classifier: high-confidence tickets auto-route with a drafted reply; uncertain ones queue for humans with a suggested label.</p></div></section>
+<section class="sec"><div class="wrap">
+<div class="case-media" role="img" aria-label="Placeholder of the triage dashboard"><div class="bar"><i></i><i></i><i></i>&nbsp; triage queue — live dashboard</div><div class="shot s2">AUTO-ROUTED 62% · DRAFTED · HUMAN REVIEW 38%</div></div>
+<h4 class="meta" style="color:var(--accent);margin:32px 0 8px">PROBLEM</h4>
+<p style="color:var(--muted);max-width:64ch">No priority signal — urgent outages waited behind password resets. First response depended on who glanced at the inbox first.</p>
+<h4 class="meta" style="color:var(--accent);margin:24px 0 8px">PROCESS</h4>
+<p style="color:var(--muted);max-width:64ch">Labelled 1,000+ historical tickets, built embedding retrieval + LLM classifier with a confidence threshold tuned on a holdout set. Human-in-the-loop from day one: every auto-action logged with its reasoning, one-click undo.</p>
+<div class="result"><b>RESULT →</b> 60% auto-routed with drafts; first-response <b>down from hours to under 30 minutes</b>. Support staff handle edge cases, not triage.</div>
+<div class="cta-row"><a class="btn" href="../contact.html">Triage My Inbox →</a><a class="btn ghost" href="../work.html">← All Work</a></div>
+</div></section>
+</main>
+<footer><div class="wrap"><div class="f-base"><span>© <span id="yr">2026</span> FELU</span><span>STATUS: <span style="color:var(--accent)">● OPERATIONAL</span></span></div></div></footer>
+<script src="../js/main.js"></script>
+</body>
+</html>

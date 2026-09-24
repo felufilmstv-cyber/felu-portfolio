@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReportFlow — 6 hrs to Near-Zero · FELU</title>
+<meta name="description" content="Case study: scheduled n8n + LLM reporting pipeline. Manual Friday reporting cut from 6 hours to a 20-minute review.">
+<meta property="og:title" content="ReportFlow — automated reporting"><meta property="og:type" content="website"><meta property="og:image" content="../assets/og-cover.svg">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a><div class="progress" aria-hidden="true"><i></i></div>
+<header class="nav"><div class="nav-inner">
+<a class="logo" href="../index.html"><span class="dot"></span>FELU<b>/</b>AUTOMATION.DEV</a>
+<nav class="links" aria-label="Primary"><a class="nl" href="../work.html" aria-current="page">Work</a><a class="nl" href="../about.html">About</a><a class="nl" href="../about.html#experience">Experience</a><a class="nl" href="../contact.html">Contact</a><a class="btn" href="../contact.html">Let's Talk</a></nav>
+<button class="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<div class="mobile-menu" role="dialog" aria-label="Menu"><button class="close" aria-label="Close menu">✕</button>
+<a class="big" href="../work.html"><small>01</small>Work</a><a class="big" href="../about.html"><small>02</small>About</a><a class="big" href="../contact.html"><small>04</small>Contact</a>
+<a class="btn" href="../contact.html" style="margin-top:24px;justify-content:center">Let's Talk</a></div>
+<main id="main">
+<section class="page-hero"><div class="wrap"><p class="kicker">Project 03 — reporting pipeline</p>
+<h1>6 hrs/week,<br>now a 20-min review.</h1>
+<div class="ptags"><span class="tag">n8n</span><span class="tag">LLM summariser</span><span class="tag">Sheets API</span><span class="tag">Role: design + build</span></div>
+<p style="margin-top:18px">Weekly ops reporting was hand-assembled every Friday from three sources. I replaced it with a scheduled pipeline: pull → normalise → validate → LLM summary with quoted figures → delivered Monday 07:00.</p></div></section>
+<section class="sec"><div class="wrap">
+<div class="case-media" role="img" aria-label="Placeholder of the automated Monday report"><div class="bar"><i></i><i></i><i></i>&nbsp; monday report — live output</div><div class="shot s3">MON 07:00 · DELIVERED · ✓ SCHEMA VALIDATED</div></div>
+<h4 class="meta" style="color:var(--accent);margin:32px 0 8px">PROBLEM</h4>
+<p style="color:var(--muted);max-width:64ch">6 hours of copy-paste across Sheets, inbox and CRM every week. Errors crept in; nobody trusted the deck.</p>
+<h4 class="meta" style="color:var(--accent);margin:24px 0 8px">PROCESS</h4>
+<p style="color:var(--muted);max-width:64ch">Built source connectors with schema validation that blocks the send on mismatch (fail loud, never silently wrong). The LLM writes only the narrative layer, with every figure cited to its cell — no invented numbers. Full run log, timestamped archive.</p>
+<div class="result"><b>RESULT →</b> Manual work <b>6h → ~20 min review (−94%)</b>. One timestamped source of truth the team actually trusts.</div>
+<div class="cta-row"><a class="btn" href="../contact.html">Automate My Reporting →</a><a class="btn ghost" href="../work.html">← All Work</a></div>
+</div></section>
+</main>
+<footer><div class="wrap"><div class="f-base"><span>© <span id="yr">2026</span> FELU</span><span>STATUS: <span style="color:var(--accent)">● OPERATIONAL</span></span></div></div></footer>
+<script src="../js/main.js"></script>
+</body>
+</html>

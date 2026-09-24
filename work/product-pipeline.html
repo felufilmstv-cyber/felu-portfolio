@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Launch Pipeline — Form to Product Video · FELU</title>
+<meta name="description" content="Case study: n8n product media pipeline — form submission to Drive folders, background removal, AI video generation with status polling, and Gmail notification. Zero manual handoffs.">
+<meta property="og:title" content="Launch Pipeline — form to product video"><meta property="og:type" content="website"><meta property="og:image" content="../assets/product-pipeline.png">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a><div class="progress" aria-hidden="true"><i></i></div>
+<header class="nav"><div class="nav-inner">
+<a class="logo" href="../index.html"><span class="dot"></span>FELU<b>/</b>AUTOMATION.DEV</a>
+<nav class="links" aria-label="Primary"><a class="nl" href="../work.html" aria-current="page">Work</a><a class="nl" href="../about.html">About</a><a class="nl" href="../about.html#experience">Experience</a><a class="nl" href="../contact.html">Contact</a><a class="btn" href="../contact.html">Let's Talk</a></nav>
+<button class="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<div class="mobile-menu" role="dialog" aria-label="Menu"><button class="close" aria-label="Close menu">✕</button>
+<a class="big" href="../work.html"><small>01</small>Work</a><a class="big" href="../about.html"><small>02</small>About</a><a class="big" href="../contact.html"><small>04</small>Contact</a>
+<a class="btn" href="../contact.html" style="margin-top:24px;justify-content:center">Let's Talk</a></div>
+<main id="main">
+<section class="page-hero"><div class="wrap"><p class="kicker">Project 05 — media pipeline</p>
+<h1>One form in.<br>Listed product out.</h1>
+<div class="ptags"><span class="tag">n8n</span><span class="tag">Drive API</span><span class="tag">Background-removal API</span><span class="tag">AI video API</span><span class="tag">Gmail</span><span class="tag">Role: design + build</span></div>
+<p style="margin-top:18px">Listing a product meant Drive folders, image cleanup, promo video rendering and a notification email — scattered across tools and hours. One form submission now runs the whole chain: folders, uploads, background removal, AI video with status polling, and delivery email. Zero manual handoffs.</p></div></section>
+<section class="sec"><div class="wrap">
+<div class="case-media" role="img" aria-label="n8n canvas showing the form-to-video product pipeline with status polling loop"><div class="bar"><i></i><i></i><i></i>&nbsp; n8n canvas — launch pipeline</div><div class="shotwrap"><div class="shot s1">FORM → FOLDERS → BG-REMOVE → VIDEO → EMAIL</div><img class="shot-img" src="../assets/product-pipeline.png" alt="n8n workflow: form submission creating Drive folders, removing image backgrounds, generating AI video with a polling loop, and sending a Gmail notification" loading="lazy" width="1200" height="675" onerror="this.remove()"></div></div>
+<h4 class="meta" style="color:var(--accent);margin:32px 0 8px">PROBLEM</h4>
+<p style="color:var(--muted);max-width:64ch">Every product launch repeated the same dozen steps across Drive, an image tool, a video tool and email. Slow, inconsistent — folders misnamed, videos forgotten, notifications late.</p>
+<h4 class="meta" style="color:var(--accent);margin:24px 0 8px">PROCESS</h4>
+<p style="color:var(--muted);max-width:64ch">Form trigger → create slug → create folder → grant access → fetch image, then parallel branches: upload original + insert product record, and remove background via API → upload → update URL → extract AI-form image URL → create video → <strong style="color:var(--text)">wait + poll status in a loop until rendering finishes</strong> → fetch link → convert to binary → upload → update link → Gmail notification. The polling loop is the load-bearing detail: video renders take minutes, and the flow waits properly instead of assuming.</p>
+<div class="result"><b>RESULT →</b> Full listing asset pack from a single form fill — launch prep down from hours of manual steps to minutes.</div>
+<div class="cta-row"><a class="btn" href="../contact.html">Pipeline My Launches →</a><a class="btn ghost" href="../work.html">← All Work</a></div>
+</div></section>
+</main>
+<footer><div class="wrap"><div class="f-grid">
+<div><a class="logo" href="../index.html"><span class="dot"></span>FELU<b>/</b>AUTOMATION.DEV</a></div>
+<nav aria-label="Footer"><span class="meta">Sitemap</span><a href="../work.html">Work</a><a href="../about.html">About</a><a href="../contact.html">Contact</a></nav>
+<nav aria-label="Social"><span class="meta">Elsewhere</span><a href="https://github.com/felu5g">GitHub</a><a href="https://linkedin.com/in/felu5g">LinkedIn</a><a href="https://x.com/felu5g">X</a></nav></div>
+<div class="f-base"><span>© <span id="yr">2026</span> FELU</span><span>STATUS: <span style="color:var(--accent)">● OPERATIONAL</span></span></div></div></footer>
+<script src="../js/main.js"></script>
+</body>
+</html>
