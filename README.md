@@ -66,6 +66,11 @@ python -m http.server 8000
   and CTA sections, plus a labelled strip above the skills list — same file.
 - **Reduced motion:** SMIL is paused and pulses/halos hidden via the `rm` class
   set in `js/main.js`; CSS keyframe motion is disabled in media queries.
+- **Ambient node-graph:** last block of `js/main.js` (creates its own fixed
+  `<canvas>`, no markup). Tune: `COUNT`/`LINK` (45/150px desktop, 18/130px
+  mobile), drift speed `s` (~0.1–0.22 px/frame), pulse cadence (~2.2–4.4s,
+  max 2 concurrent), base `rgba(255,255,255,.06/.09)`, pulse lime. Live probe:
+  `window.__netbg` (`{ticks, nodes, pulses}`).
 
 ## Profile photo
 

@@ -309,4 +309,109 @@
 
   // footer year
   var yr = document.getElementById("yr"); if(yr) yr.textContent = new Date().getFullYear();
+
+  // Ambient node-graph background — fixed canvas behind everything, own layer.
+  // Unlabeled texture only (no nodes/labels with meaning); the scoped pipeline
+  // section keeps its separate animation untouched. Exposes window.__netbg
+  // ({ticks, nodes, pulses}) for testing.
+  (function(){
+    if(!("requestAnimationFrame" in window) || !document.body) return;
+    var cv = document.createElement("canvas");
+    cv.setAttribute("aria-hidden", "true");
+    cv.style.cssText = "position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.9";
+    if(document.body.firstChild) document.body.insertBefore(cv, document.body.firstChild);
+    else document.body.appendChild(cv);
+    var ctx = cv.getContext("2d");
+    var W = 0, H = 0, DPR = 1, nodes = [], pulses = [];
+    var MOBILE = window.matchMedia("(max-width: 900px)").matches;
+    var COUNT = MOBILE ? 18 : 45;
+    var LINK = MOBILE ? 130 : 150;
+    var api = window.__netbg = { ticks: 0, nodes: 0, pulses: 0 };
+    function resize(){
+      DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+      W = window.innerWidth; H = window.innerHeight;
+      cv.width = Math.floor(W * DPR); cv.height = Math.floor(H * DPR);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    }
+    function seed(){
+      nodes = [];
+      for(var i = 0; i < COUNT; i++){
+        var a = Math.random() * Math.PI * 2, s = .1 + Math.random() * .12;
+        nodes.push({ x: Math.random() * W, y: Math.random() * H,
+          vx: Math.cos(a) * s, vy: Math.sin(a) * s, r: 1 + Math.random() * 1.2 });
+      }
+      api.nodes = nodes.length;
+    }
+    function links(){
+      var out = [], i, j, dx, dy, d2 = LINK * LINK;
+      for(i = 0; i < nodes.length; i++){
+        for(j = i + 1; j < nodes.length; j++){
+          dx = nodes[i].x - nodes[j].x; dy = nodes[i].y - nodes[j].y;
+          if(dx * dx + dy * dy < d2) out.push([i, j]);
+        }
+      }
+      return out;
+    }
+    function draw(staticFrame){
+      ctx.clearRect(0, 0, W, H);
+      var ls = links(), k, a, b, px, py;
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(255,255,255,.06)";
+      ctx.beginPath();
+      for(k = 0; k < ls.length; k++){
+        a = nodes[ls[k][0]]; b = nodes[ls[k][1]];
+        ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+      }
+      ctx.stroke();
+      ctx.fillStyle = "rgba(255,255,255,.09)";
+      for(k = 0; k < nodes.length; k++){
+        ctx.beginPath(); ctx.arc(nodes[k].x, nodes[k].y, nodes[k].r, 0, 6.2832); ctx.fill();
+      }
+      for(k = pulses.length - 1; k >= 0; k--){
+        var p = pulses[k];
+        if(!staticFrame) p.t += .016;
+        a = nodes[p.a]; b = nodes[p.b];
+        if(!a || !b || p.t >= 1){ pulses.splice(k, 1); continue; }
+        px = a.x + (b.x - a.x) * p.t; py = a.y + (b.y - a.y) * p.t;
+        ctx.strokeStyle = "rgba(198,241,53,.35)";
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        var g = ctx.createRadialGradient(px, py, 0, px, py, 7);
+        g.addColorStop(0, "rgba(198,241,53,.9)"); g.addColorStop(1, "rgba(198,241,53,0)");
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(px, py, 7, 0, 6.2832); ctx.fill();
+      }
+      api.pulses = pulses.length;
+    }
+    var lastPulse = 0, raf = null, running = false;
+    function frame(now){
+      api.ticks++;
+      var i, n;
+      for(i = 0; i < nodes.length; i++){
+        n = nodes[i];
+        n.x += n.vx; n.y += n.vy;
+        if(n.x < -20) n.x = W + 20; else if(n.x > W + 20) n.x = -20;
+        if(n.y < -20) n.y = H + 20; else if(n.y > H + 20) n.y = -20;
+      }
+      if(now - lastPulse > 2200 + Math.random() * 2200 && pulses.length < 2){
+        lastPulse = now;
+        var ls = links();
+        if(ls.length){ var pick = ls[(Math.random() * ls.length) | 0]; pulses.push({ a: pick[0], b: pick[1], t: 0 }); }
+      }
+      draw(false);
+      raf = requestAnimationFrame(frame);
+    }
+    function start(){ if(running || reduce) return; running = true; raf = requestAnimationFrame(frame); }
+    function stop(){ running = false; if(raf && window.cancelAnimationFrame) window.cancelAnimationFrame(raf); raf = null; }
+    resize(); seed();
+    if(reduce){ draw(true); return; } // static single frame, no motion
+    var rzT = null;
+    window.addEventListener("resize", function(){
+      if(rzT) clearTimeout(rzT);
+      rzT = setTimeout(function(){ resize(); seed(); }, 200);
+    });
+    document.addEventListener("visibilitychange", function(){
+      if(document.hidden) stop(); else start();
+    });
+    start();
+  })();
 })();
