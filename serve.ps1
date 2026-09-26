@@ -1,4 +1,4 @@
-# FELU portfolio — zero-dependency local server (PowerShell + .NET HttpListener).
+# Felu AI DEV portfolio — zero-dependency local server (PowerShell + .NET HttpListener).
 # Run:  powershell -ExecutionPolicy Bypass -File serve.ps1 [-Port 8000]
 # Stop: Stop-Process -Id (Get-Content .server.pid)
 param([int]$Port = 8000)
@@ -6,7 +6,7 @@ $root = $PSScriptRoot
 $mime = @{
   ".html" = "text/html; charset=utf-8"; ".css" = "text/css; charset=utf-8"
   ".js" = "application/javascript; charset=utf-8"; ".svg" = "image/svg+xml"
-  ".png" = "image/png"; ".webp" = "image/webp"; ".ico" = "image/x-icon"
+  ".png" = "image/png"; ".jpg" = "image/jpeg"; ".jpeg" = "image/jpeg"; ".webp" = "image/webp"; ".ico" = "image/x-icon"
   ".json" = "application/json"; ".txt" = "text/plain"
 }
 $listener = New-Object Net.HttpListener

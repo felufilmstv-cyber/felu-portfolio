@@ -1,6 +1,6 @@
-# FELU — Automation Portfolio
+# Felu AI DEV — Automation Portfolio
 
-Static personal portfolio for **FELU, AI Automation Expert & Software Developer**.
+Static personal portfolio for **Favour Adefelu Adeleye, AI Automation Expert & Software Developer**.
 No framework, no build step, no backend. Deploys straight to GitHub Pages.
 
 ## Why this design
@@ -28,7 +28,7 @@ aspect) ready to swap for real screenshots or WebP exports.
 | `work.html` | `/work.html` |
 | `about.html` | `/about.html` |
 | `contact.html` | `/contact.html` |
-| `work/eamaglobermovers.html` | `/work/eamaglobermovers.html` |
+| `work/emmaglobermovers.html` | `/work/emmaglobermovers.html` |
 | `work/support-pilot.html` | `/work/support-pilot.html` |
 | `work/reportflow.html` | `/work/reportflow.html` |
 | `work/rag-agent.html` | `/work/rag-agent.html` |
@@ -51,7 +51,30 @@ python -m http.server 8000
 3. Custom domain (optional): add `CNAME` file with your domain + DNS CNAME → `[USER].github.io`.
 4. `.nojekyll` is included so folders like `work/` pass through untouched.
 
-## Real screenshots (optional upgrade)
+## Visual system tuning (redesign notes)
+
+- **Wordmark:** `.wm` lockup in `css/style.css` — `FELU` in Chakra Petch 700
+  (`--font-mark`), `AI·DEV` in tracked-out mono with a lime→cyan gradient
+  (`--accent` → `--accent-2`). Used in nav, hero name line (`.mark-name`), footer.
+- **Pipeline background:** inline SVG `svg.pipe-bg` at the top of the hero in
+  `index.html`. Node labels are the SVG `<text>` elements (LEAD → WEBHOOK →
+  AI AGENT → VOICE → CRM) — edit text/positions there. Rail colour/opacity via
+  the `<g>` stroke attributes; pulse colour via `--accent-2`; loop timing is an
+  8s cycle — pulse windows in each pulse's `keyTimes`, node flashes via the
+  `.n-*` `animation-delay` rules in CSS. Nodes tagged `only-desktop` hide on mobile.
+- **Motif reuse:** `.flow-div` (line + travelling dot) dividers before the quote
+  and CTA sections, plus a labelled strip above the skills list — same file.
+- **Reduced motion:** SMIL is paused and pulses/halos hidden via the `rm` class
+  set in `js/main.js`; CSS keyframe motion is disabled in media queries.
+
+## Profile photo
+
+Save the headshot as `assets/profile.jpg` (portrait orientation works best).
+It renders in the About hero (4:5 crop, face-safe `object-position`) and the
+homepage About preview (1:1 crop), with descriptive alt text. If the file is
+missing, the photo blocks remove themselves via `onerror` and the layout holds.
+
+## Canvas screenshots (optional upgrade)
 
 Projects 04–05 already reference `assets/rag-agent.png` and `assets/product-pipeline.png` —
 drop those files in and they appear automatically over the designed fallbacks
