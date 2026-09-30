@@ -22,17 +22,19 @@ aspect) ready to swap for real screenshots or WebP exports.
 
 ## Pages / routes
 
-| File | Route on Pages |
+Single-page app: `index.html` (`/`) holds Hero → Selected Work → About →
+Experience → Capabilities → How I Work → Proof → Contact, with anchor nav
+(`#work`, `#about`, `#experience`, `#contact`) + scrollspy.
+
+| File | Route |
 |---|---|
-| `index.html` | `/` |
-| `work.html` | `/work.html` |
-| `about.html` | `/about.html` |
-| `contact.html` | `/contact.html` |
-| `work/emmaglobermovers.html` | `/work/emmaglobermovers.html` |
-| `work/support-pilot.html` | `/work/support-pilot.html` |
-| `work/reportflow.html` | `/work/reportflow.html` |
-| `work/rag-agent.html` | `/work/rag-agent.html` |
-| `work/product-pipeline.html` | `/work/product-pipeline.html` |
+| `index.html` | `/` (the whole site) |
+| `work.html`, `about.html`, `contact.html` | redirect stubs → `/#work`, `/#about`, `/#contact` |
+| `work/emmaglobermovers.html` | `/work/emmaglobermovers.html` (deep case study) |
+| `work/support-pilot.html` | `/work/support-pilot.html` (deep case study) |
+| `work/reportflow.html` | `/work/reportflow.html` (deep case study) |
+| `work/rag-agent.html` | `/work/rag-agent.html` (deep case study) |
+| `work/product-pipeline.html` | `/work/product-pipeline.html` (deep case study) |
 | `404.html` | fallback |
 
 ## Run locally
@@ -90,7 +92,8 @@ drop those files in and they appear automatically over the designed fallbacks
 ## Interactions (each has a reason)
 
 1. Scroll progress + nav solid-state — orientation, "pipeline executing".
-2. Cursor-follow project preview (fine-pointer only; tap = navigate on touch).
+2. Cursor-follow project preview — RETIRED (images render inline now; last
+   working version in git history under "armPreview").
 3. Expandable skills system list — categories, not icon grids.
 4. Count-up metrics tied to case-study results.
 5. Magnetic CTA buttons (subtle, pointer-fine only).

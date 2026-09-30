@@ -44,13 +44,6 @@
     setTimeout(function(){ h1.classList.add("settled"); }, 2500);
   })();
 
-  // Pipeline background: freeze SMIL + hide pulses for reduced motion
-  document.querySelectorAll("svg.pipe-bg").forEach(function(svg){
-    if(!reduce) return;
-    svg.classList.add("rm");
-    try { svg.pauseAnimations(); } catch(e){}
-  });
-
   // 1. Nav solid-state + scroll progress (mechanical 2px bar)
   var nav = document.querySelector(".nav"), prog = document.querySelector(".progress i");
   function onScroll(){
@@ -63,16 +56,15 @@
   }
   window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
 
-  // Hero background parallax — two depth layers, rAF-throttled transform only
-  var hgrid = document.querySelector(".hero-grid-bg"), pbg = document.querySelector("svg.pipe-bg");
-  if((hgrid || pbg) && !reduce){
+  // Hero grid parallax — rAF-throttled transform only
+  var hgrid = document.querySelector(".hero-grid-bg");
+  if(hgrid && !reduce){
     var ptick = false;
     window.addEventListener("scroll", function(){
       if(ptick) return; ptick = true;
       requestAnimationFrame(function(){
         var y = window.scrollY || 0;
-        if(hgrid) hgrid.style.transform = "translateY(" + (y * -.06) + "px)";
-        if(pbg) pbg.style.transform = "translateY(" + (y * -.03) + "px)";
+        hgrid.style.transform = "translateY(" + (y * -.06) + "px)";
         ptick = false;
       });
     }, {passive:true});
@@ -84,28 +76,41 @@
     burger.addEventListener("click", function(){ menu.classList.add("on"); burger.setAttribute("aria-expanded","true"); var c = menu.querySelector(".close"); if(c) c.focus(); });
     menu.querySelector(".close").addEventListener("click", function(){ menu.classList.remove("on"); burger.setAttribute("aria-expanded","false"); burger.focus(); });
     menu.addEventListener("keydown", function(e){ if(e.key === "Escape"){ menu.classList.remove("on"); burger.focus(); } });
+    menu.querySelectorAll("a").forEach(function(a){
+      a.addEventListener("click", function(){ menu.classList.remove("on"); burger.setAttribute("aria-expanded","false"); });
+    });
   }
 
-  // 3. Scroll reveals — IntersectionObserver, GPU props only (transform/opacity/clip-path)
-  var els = document.querySelectorAll(".rv,.rv-scale,.wipe");
+  // 2b. Scrollspy — highlight the nav link for the section in view
+  (function(){
+    var links = document.querySelectorAll('.links a.nl[href^="#"], .mobile-menu a.big[href^="#"]');
+    var ids = ["work", "about", "experience", "contact"];
+    var secs = ids.map(function(id){ return document.getElementById(id); }).filter(function(s){ return !!s; });
+    if(!links.length || !secs.length || !("IntersectionObserver" in window)) return;
+    var spy = new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(!en.isIntersecting) return;
+        var hash = "#" + en.target.id;
+        links.forEach(function(a){
+          if(a.getAttribute("href") === hash) a.setAttribute("aria-current", "page");
+          else a.removeAttribute("aria-current");
+        });
+      });
+    }, {rootMargin: "-40% 0px -55% 0px"});
+    secs.forEach(function(s){ spy.observe(s); });
+  })();
+
+  // 3. Scroll reveals — IntersectionObserver, GPU props only (transform/opacity)
+  var els = document.querySelectorAll(".rv,.rv-scale");
   if("IntersectionObserver" in window && !reduce){
-    // NOTE: clip-path: inset() clips an element to zero visible area, and
-    // IntersectionObserver then reports ratio 0 forever. So .wipe rows are
-    // revealed by observing their SECTION (unclipped ancestor), not the row.
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(en){
         if(!en.isIntersecting) return;
-        var list = en.target._reveals || [en.target];
-        list.forEach(function(el){ el.classList.add("in"); });
+        en.target.classList.add("in");
         io.unobserve(en.target);
       });
     }, {threshold:.12, rootMargin:"0px 0px -8% 0px"});
-    els.forEach(function(el){
-      var watch = el;
-      if(el.classList && el.classList.contains("wipe") && el.closest("section")) watch = el.closest("section");
-      watch._reveals = (watch._reveals || []).concat([el]);
-      io.observe(watch);
-    });
+    els.forEach(function(el){ io.observe(el); });
   } else { els.forEach(function(el){ el.classList.add("in"); }); }
 
   // 4. Animated metrics — count up once in view
@@ -142,70 +147,10 @@
     });
   });
 
-  // 6. Cursor-follow project preview (desktop only; touch uses tap = link)
-  // Hard rules: 180ms hover intent; hidden instantly on scroll/mouseleave;
-  // re-arms ONLY on genuine mouse movement while a row is hovered at rest;
-  // clamped above the cursor so it never covers the row's own metadata.
-  var prev = document.getElementById("cursorPrev");
-  if(prev && window.matchMedia("(pointer:fine)").matches && !reduce){
-    var panes = prev.querySelectorAll(".pv"), x = 0, y = 0, cx = 0, cy = 0, raf = null;
-    var showTimer = null, scrollTimer = null, scrolling = false, activeRow = null;
-    var PW = 320, PH = 210;
-    function target(){
-      var vw = window.innerWidth || 1440;
-      var px = Math.min(Math.max(x - PW / 2, 8), Math.max(8, vw - PW - 8));
-      var py = y - PH - 16;
-      if(py < 8) py = y + 24; // near viewport top: fall below the cursor
-      return [px, py];
-    }
-    function loop(){
-      var t = target();
-      cx += (t[0] - cx) * .2; cy += (t[1] - cy) * .2;
-      prev.style.transform = "translate(" + cx + "px," + cy + "px)" + (prev.classList.contains("on") ? " scale(1)" : " scale(.92)");
-      if(prev.classList.contains("on") || activeRow){ raf = requestAnimationFrame(loop); }
-      else { raf = null; } }
-    function hidePreview(){
-      if(showTimer){ clearTimeout(showTimer); showTimer = null; }
-      activeRow = null;
-      prev.classList.remove("on");
-    }
-    function armPreview(row){
-      if(showTimer){ clearTimeout(showTimer); showTimer = null; }
-      activeRow = row;
-      var enteredAtRest = !scrolling; // entries made mid-scroll never fire — re-enter or move after rest
-      showTimer = setTimeout(function(){
-        showTimer = null;
-        if(scrolling || !enteredAtRest || activeRow !== row) return;
-        panes.forEach(function(p){ p.classList.toggle("on", p.dataset.k === row.dataset.prev); });
-        var t = target(); cx = t[0]; cy = t[1]; // start placed — no swoop, no stale coords
-        prev.classList.add("on");
-        if(!raf) loop();
-      }, 180);
-    }
-    window.addEventListener("scroll", function(){
-      scrolling = true;
-      hidePreview(); // gone on first scroll tick — never sticks mid-scroll
-      if(scrollTimer) clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(function(){ scrolling = false; }, 160);
-    }, {passive:true});
-    document.querySelectorAll(".prow[data-prev]").forEach(function(row){
-      row.addEventListener("mouseenter", function(){ armPreview(row); });
-      row.addEventListener("mouseleave", function(){ hidePreview(); });
-      row.addEventListener("click", function(){ window.location.href = row.dataset.href; });
-    });
-    window.addEventListener("mousemove", function(e){
-      x = e.clientX; y = e.clientY;
-      if(scrolling) return;
-      var t = e.target;
-      var overRow = t && t.closest ? t.closest(".prow[data-prev]") : null;
-      if(prev.classList.contains("on") && !overRow){ hidePreview(); return; } // failsafe: not over a row = hidden
-      if(!prev.classList.contains("on") && overRow){ armPreview(overRow); } // genuine movement re-arms at rest
-    }, {passive:true});
-  } else {
-    document.querySelectorAll(".prow[data-href]").forEach(function(row){
-      row.addEventListener("click", function(){ window.location.href = row.dataset.href; });
-    });
-  }
+  // 6. Cursor-follow preview RETIRED with the single-page restructure.
+  // Project images now render inline in each entry, so the floating preview
+  // is redundant — removing it eliminates the stuck-tooltip bug class entirely.
+  // (Last working version preserved in git history: search "armPreview".)
 
   // 7. Magnetic buttons — subtle, precise (disabled on touch / reduced motion)
   if(window.matchMedia("(pointer:fine)").matches && !reduce){
